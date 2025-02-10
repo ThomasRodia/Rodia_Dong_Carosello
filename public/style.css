@@ -1,3 +1,43 @@
 .l{
     text-align: left;
 }
+.Logo{
+    width: 100px;
+    height: 100px;
+
+}
+
+.titolo2{
+    color:black;
+    text-align: left;
+}
+
+
+
+.Logo2{
+    width: 150px;
+    height: 150px;
+    align-items: right;
+
+}
+/* Imposta il contenitore principale per occupare tutta l'altezza della finestra */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Contenitore principale della pagina */
+.container {
+    flex: 1; /* Occupa tutto lo spazio disponibile */
+}
+
+/* Footer sempre in fondo */
+.pieDiPagina {
+    background-color: #000000;
+    color: white;
+    text-align: left;
+    padding: 10px;
+    width: 100%; 
+}
