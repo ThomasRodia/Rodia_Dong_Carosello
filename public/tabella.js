@@ -1,4 +1,4 @@
-export const createTableStorico = (parentElement) => {
+export const createTable = (parentElement) => {
     let dati=null;
     let istance;
     let callback;
