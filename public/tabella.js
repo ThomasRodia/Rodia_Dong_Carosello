@@ -48,7 +48,7 @@ dati[i].url +
 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
 <img src="files/` +
 dati[i].nome +
-`" alt="immagine"/></th>
+`" class="immagine-tabella" alt="immagine"/></th>
 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"><a href="./index.html">
 <button class="btn btn-dark titolo" id="Cancella">CANCELLA</button></a>
 
@@ -90,6 +90,13 @@ dati[i].nome +
     },
 
     load: function () {
+        dati=[
+            {nome:"RD.png",
+            url:""
+            }
+        ]
+        istance.render()
+        /*
         return fetch("/car/get")
             .then(response => response.json())
             .then(json => {
@@ -99,6 +106,8 @@ dati[i].nome +
                 return json;
             })
             .catch(error => { console.error("Errore nel caricamento:", error); });
+            */
+
     }
   };
   return istance;

@@ -1,4 +1,4 @@
-export const createTable = (parentElement) => {
+export const createTableCarosello = (parentElement) => {
     let dati=null;
     let istance;
     let callback;
@@ -16,7 +16,7 @@ callback=cb;
   html+=`
 
     <div class="carousel-item active">
-      <img src="files/`+dati[i].nome+`" class="d-block w-100" alt="immagine">
+      <img src="../files/`+dati[i].nome+`" class="d-block w-100 immagine-carosello" alt="immagine">
     </div>
    
   `;
@@ -41,7 +41,14 @@ callback=cb;
     },
 
     load: function () {
+        dati=[
+            {nome:"RD.png",
+            url:""
+            }
+        ]
+        istance.render()
         //da sistemare
+        /*
         return fetch("/car/get")
             .then(response => response.json())
             .then(json => {
@@ -51,6 +58,7 @@ callback=cb;
                 return json;
             })
             .catch(error => { console.error("Errore nel caricamento:", error); });
+            */
     }
   };
   return istance;
