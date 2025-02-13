@@ -12,7 +12,17 @@ callback=cb;
       
               let html = `
                         <div class="container">
-     
+                        <div class="row">
+                        <div class="col">
+     <input id="file" name="file" class="form-control "placeholder="Insercisci CSV"type="file" single>
+     </div>
+     <div class="col">
+  <button type="button" id="Caricaimg" class="btn btn-dark b1"><img class="i-upload" src="assets/images/upload.png" alt="tab" /> Aggiungi immagine</button>
+    </div>
+    <div class="col">
+    <a href="#pagina1"><button class="btn btn-dark">HOME</button></a>
+    </div>
+    </div>
 
     
     <div class="mt-4" id="tab">
@@ -22,9 +32,7 @@ callback=cb;
                     <th scope="col" class="px-6 py-3">
                         Nome
                     </th>
-                    <th scope="col" class="px-6 py-3">
-                        URL
-                    </th>
+                    
                      <th scope="col" class="px-6 py-3">
                         Immagine
                     </th>
@@ -42,9 +50,7 @@ callback=cb;
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">` +
 dati[i].nome +
 `</th>
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">` +
-dati[i].url +
-`</th>
+                   
 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
 <img src="files/` +
 dati[i].nome +
@@ -68,7 +74,32 @@ dati[i].nome +
                       
 
               parentElement.innerHTML = html;
+ const input=document.getElementById("Caricaimg");
+ const inputFile=document.getElementById("file");
 
+
+  
+    let handleSubmit = async (event) => {
+      const formData = new FormData();
+      console.info(inputFile.files[0]);
+      formData.append("file", inputFile.files[0]);
+      //const body = inputFile.files[0];
+     
+        const body = formData;
+      console.info(body);
+      const fetchOptions = {
+        method: 'post',
+        body: body
+      };
+      try {
+        console.info(fetchOptions);
+        const res = await fetch("/img/upload", fetchOptions);
+        inputFile.value="";
+      } catch (e) {
+        console.log(e);
+      }
+    }
+ input.onclick = handleSubmit;
     document.querySelectorAll("#Cancella").forEach((button, index) => {
         button.onclick = () => {
                istance.delete(index);
@@ -80,33 +111,19 @@ dati[i].nome +
       
     },
     delete: function (indice) {
-        /*
-        let xv = dati[indice].x;
-        let yv = dati[indice].y;
-        console.info({ x: xv, y: yv });
-        let fin=callback({ x: xv, y: yv })
-        localStorage.setItem('datiCalcolati', JSON.stringify(fin));
-        */
+      
     },
 
     load: function () {
-        dati=[
-            {nome:"RD.png",
-            url:""
-            }
-        ]
-        istance.render()
-        /*
-        return fetch("/car/get")
-            .then(response => response.json())
-            .then(json => {
-                console.info("Dati caricati:", json);
-                dati = json;
-                istance.render();
-                return json;
-            })
-            .catch(error => { console.error("Errore nel caricamento:", error); });
-            */
+        return fetch("/img/downloadAll")
+        .then(response => response.json())
+        .then(json => {
+            dati = json;
+            istance.render();
+            return json;
+        })
+        .catch(error => { console.error("Errore nel caricamento delle immagini:", error); });
+
 
     }
   };
