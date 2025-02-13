@@ -11,12 +11,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use("/", express.static(path.join(__dirname, "public")));
-app.use("/assets", express.static(path.join(__dirname, "Public/Assets")));
-
-
-
-
-
+app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
 var storage = multer.diskStorage({
    destination: function (req, file, callback) {
@@ -29,12 +24,9 @@ var storage = multer.diskStorage({
 const upload = multer({ storage: storage}).single('file');
 app.use("/files", express.static(path.join(__dirname, "files")));
 app.post('/img/upload', (req, res) => {
-   upload(req, res, (err) => {
-        
-      //console.log(req.file.filename);    
+   upload(req, res, (err) => {   
       res.json({url: "./files/" + req.file.filename});    
-     
- })
+   })
 });
 
 app.get('/img/downloadAll', (req, res) => {
