@@ -48,7 +48,11 @@
         <div class="row">
           <div class="col"></div>
           <div class="col">
-            <a href="#pagina2"><button class="btn btn-dark">Admin</button></a>
+            <div id="private">
+              <button type="button" class="btn btn-primary bg-success" data-bs-toggle="modal" data-bs-target="#login">
+                Admin
+              </button>
+            </div>
           </div>
         </div>
         <div class="row">
@@ -139,6 +143,26 @@
       </div>
     </div>
 
+    <!--Modale login-->
+    <div class="modal fade " id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="modal-bd">
+          </div>
+          <div class="modal-footer">
+            <div id="prompt"></div>
+            <button type="button" class="btn btn-danger bg-danger" data-bs-dismiss="modal">Chiudo</button>
+            <button type="button" class="btn btn-primary bg-success" id="accesso" data-bs-dismiss="modal">Login</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
     <!-- Pagina 2 -->
     <div id="pagina2" class="page">
       <div class="container text-center">
@@ -168,7 +192,7 @@
         <div class="row">
           <div class="col"></div>
           <div class="col">
-            <a href="#pagina1"><button class="btn btn-dark">HOME</button></a>
+            <a href="#pagina1"><button class="btn btn-dark mb-3">HOME</button></a>
           </div>
         </div>
         <div class="row">
