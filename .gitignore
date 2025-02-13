@@ -2,5 +2,3 @@ config.json
 package-lock.json
 node_modules
 files
-js
-css

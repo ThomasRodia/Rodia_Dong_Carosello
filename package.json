@@ -1,25 +1,30 @@
 {
-    "name": "Carosello",
-    "version": "1.0.0",
-    "description": "",
-    "main": "server.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/ThomasRodia/Rodia_Dong_Carosello.git"
-    },
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "body-parser": "^1.20.3",
-        "bootstrap": "^5.3.3",
-        "express": "^4.21.2",
-        "fs": "^0.0.1-security",
-        "http": "^0.0.1-security",
-        "multer": "^1.4.5-lts.1",
-        "mysql2": "^3.12.0",
-        "path": "^0.12.7"
-    }
+  "name": "carosello",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThomasRodia/Rodia_Dong_Carosello.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "bootstrap": "^5.3.3",
+    "express": "^4.21.2",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.12.0",
+    "path": "^0.12.7"
+  },
+  "bugs": {
+    "url": "https://github.com/ThomasRodia/Rodia_Dong_Carosello/issues"
+  },
+  "homepage": "https://github.com/ThomasRodia/Rodia_Dong_Carosello#readme",
+  "description": ""
 }
