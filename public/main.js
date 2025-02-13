@@ -1,5 +1,8 @@
 import {createTable} from "./tabella.js";
 import {createTableCarosello }from "./carosello.js"
+import { createNavigator } from "./navigator.js";
+
+const navigator = createNavigator(document.querySelector("#container"));
 
 let cb=function(){
 
