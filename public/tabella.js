@@ -12,7 +12,17 @@ callback=cb;
       
               let html = `
                         <div class="container">
-     
+                        <div class="row">
+                        <div class="col">
+     <input id="file" name="file" class="form-control "placeholder="Insercisci CSV"type="file" single>
+     </div>
+     <div class="col">
+  <button type="button" id="Caricaimg" class="btn btn-dark b1"><img class="i-upload" src="assets/images/upload.png" alt="tab" /> Aggiungi da CSV</button>
+    </div>
+    <div class="col">
+    <a href="#pagina1"><button class="btn btn-dark">HOME</button></a>
+    </div>
+    </div>
 
     
     <div class="mt-4" id="tab">
@@ -22,9 +32,7 @@ callback=cb;
                     <th scope="col" class="px-6 py-3">
                         Nome
                     </th>
-                    <th scope="col" class="px-6 py-3">
-                        URL
-                    </th>
+                    
                      <th scope="col" class="px-6 py-3">
                         Immagine
                     </th>
@@ -42,9 +50,7 @@ callback=cb;
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">` +
 dati[i].nome +
 `</th>
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">` +
-dati[i].url +
-`</th>
+                   
 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
 <img src="files/` +
 dati[i].nome +
@@ -68,7 +74,12 @@ dati[i].nome +
                       
 
               parentElement.innerHTML = html;
-
+ const input=document.getElementById("Caricaimg");
+ const file=document.getElementById("file");
+ input.onclick = () => {
+    istance.add(file.value);
+    file.value="";
+ }
     document.querySelectorAll("#Cancella").forEach((button, index) => {
         button.onclick = () => {
                istance.delete(index);
@@ -80,13 +91,7 @@ dati[i].nome +
       
     },
     delete: function (indice) {
-        /*
-        let xv = dati[indice].x;
-        let yv = dati[indice].y;
-        console.info({ x: xv, y: yv });
-        let fin=callback({ x: xv, y: yv })
-        localStorage.setItem('datiCalcolati', JSON.stringify(fin));
-        */
+      
     },
 
     load: function () {
