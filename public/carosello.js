@@ -41,24 +41,14 @@ callback=cb;
     },
 
     load: function () {
-        dati=[
-            {nome:"RD.png",
-            url:""
-            }
-        ]
-        istance.render()
-        //da sistemare
-        /*
-        return fetch("/car/get")
-            .then(response => response.json())
-            .then(json => {
-                console.info("Dati caricati:", json);
-                dati = json;
-                istance.render();
-                return json;
-            })
-            .catch(error => { console.error("Errore nel caricamento:", error); });
-            */
+      return fetch("/img/downloadAll")
+      .then(response => response.json())
+      .then(json => {
+          dati = json;
+          istance.render();
+          return json;
+      })
+      .catch(error => { console.error("Errore nel caricamento delle immagini:", error); });
     }
   };
   return istance;

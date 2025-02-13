@@ -17,7 +17,7 @@ callback=cb;
      <input id="file" name="file" class="form-control "placeholder="Insercisci CSV"type="file" single>
      </div>
      <div class="col">
-  <button type="button" id="Caricaimg" class="btn btn-dark b1"><img class="i-upload" src="assets/images/upload.png" alt="tab" /> Aggiungi da CSV</button>
+  <button type="button" id="Caricaimg" class="btn btn-dark b1"><img class="i-upload" src="assets/images/upload.png" alt="tab" /> Aggiungi immagine</button>
     </div>
     <div class="col">
     <a href="#pagina1"><button class="btn btn-dark">HOME</button></a>
@@ -75,11 +75,31 @@ dati[i].nome +
 
               parentElement.innerHTML = html;
  const input=document.getElementById("Caricaimg");
- const file=document.getElementById("file");
- input.onclick = () => {
-    istance.add(file.value);
-    file.value="";
- }
+ const inputFile=document.getElementById("file");
+
+
+  
+    let handleSubmit = async (event) => {
+      const formData = new FormData();
+      console.info(inputFile.files[0]);
+      formData.append("file", inputFile.files[0]);
+      //const body = inputFile.files[0];
+     
+        const body = formData;
+      console.info(body);
+      const fetchOptions = {
+        method: 'post',
+        body: body
+      };
+      try {
+        console.info(fetchOptions);
+        const res = await fetch("/img/upload", fetchOptions);
+        inputFile.value="";
+      } catch (e) {
+        console.log(e);
+      }
+    }
+ input.onclick = handleSubmit;
     document.querySelectorAll("#Cancella").forEach((button, index) => {
         button.onclick = () => {
                istance.delete(index);
@@ -95,23 +115,15 @@ dati[i].nome +
     },
 
     load: function () {
-        dati=[
-            {nome:"RD.png",
-            url:""
-            }
-        ]
-        istance.render()
-        /*
-        return fetch("/car/get")
-            .then(response => response.json())
-            .then(json => {
-                console.info("Dati caricati:", json);
-                dati = json;
-                istance.render();
-                return json;
-            })
-            .catch(error => { console.error("Errore nel caricamento:", error); });
-            */
+        return fetch("/img/downloadAll")
+        .then(response => response.json())
+        .then(json => {
+            dati = json;
+            istance.render();
+            return json;
+        })
+        .catch(error => { console.error("Errore nel caricamento delle immagini:", error); });
+
 
     }
   };
