@@ -44,9 +44,7 @@ export const createTable = (parentElement) => {
                             <img src="files/`+dati[i].nome+`" class="immagine-tabella" alt="immagine" />
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            <a href="./index.html">
-                                <button class="btn btn-dark titolo" id="Cancella">CANCELLA</button>
-                            </a>
+                            <button class="btn btn-dark titolo cancella-btn">CANCELLA</button>
                         </th>
                     </tr>
                 `;
@@ -65,23 +63,23 @@ export const createTable = (parentElement) => {
             const inputFile = document.getElementById("file");
 
             let handleSubmit = async (event) => {
-                const formData = new FormData();
-                console.info(inputFile.files[0]);
-                formData.append("file", inputFile.files[0]);
-
-                const body = formData;
-                console.info(body);
-
-                const fetchOptions = {
-                    method: 'post',
-                    body: body
-                };
-
                 try {
-                    console.info(fetchOptions);
+                    const formData = new FormData();
+                    console.info(inputFile.files[0]);
+                    formData.append("file", inputFile.files[0]);
+
+                    const body = formData;
+                    console.info(body);
+
+                    const fetchOptions = {
+                        method: 'post',
+                        body: body
+                    };
+
                     const res = await fetch("/img/upload", fetchOptions);
                     inputFile.value = "";
                     
+                    await istance.load();
                 } catch (e) {
                     console.log(e);
                 }
@@ -89,7 +87,7 @@ export const createTable = (parentElement) => {
 
             input.onclick = handleSubmit;
 
-            document.querySelectorAll("#Cancella").forEach((button, index) => {
+            document.querySelectorAll(".cancella-btn").forEach((button, index) => {
                 button.onclick = () => {
                     istance.delete(index);
                 };

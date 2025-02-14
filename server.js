@@ -28,6 +28,9 @@ const upload = multer({ storage: storage}).single('file');
 app.use("/files", express.static(path.join(__dirname, "files")));
 app.post('/img/upload', (req, res) => {
    upload(req, res, (err) => {   
+      if (!req.file) {
+         return res.status(400).json({ error: "Nessun file caricato" });
+      }
       res.json({url: "./files/" + req.file.filename});    
    })
 });
