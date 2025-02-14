@@ -41,6 +41,28 @@ app.get('/img/downloadAll', (req, res) => {
       res.json(images);
    });
 });
+app.delete('/img/delete/:index', (req, res) => {
+   const directoryPath = path.join(__dirname, "files");
+   
+   fs.readdir(directoryPath, (err, files) => {
+       if (err) {
+           return res.status(500).json({ error: "Errore nella lettura della directory." });
+       }
+       
+       const index = parseInt(req.params.index, 10);
+       if (isNaN(index) || index < 0 || index >= files.length) {
+           return res.status(400).json({ error: "Indice non valido." });
+       }
+       
+       const fileToDelete = path.join(directoryPath, files[index]);
+       fs.unlink(fileToDelete, (err) => {
+           if (err) {
+               return res.status(500).json({ error: "Errore nell'eliminazione del file." });
+           }
+           res.json({ message: "File eliminato con successo." });
+       });
+   });
+});
 
 const server = http.createServer(app);
 server.listen(80, () => {
