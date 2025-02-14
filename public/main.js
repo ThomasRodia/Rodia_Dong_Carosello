@@ -54,8 +54,9 @@ login.onsubmit(document.getElementById("accesso"), async (labels) => {
             expires: 365
         });
         window.location.href = '#pagina2';
+        document.getElementById("login-close").click();
     } else {
-
+        document.getElementById("prompt").innerHTML = "Credenziali non corrette!";
     }
 });
 
