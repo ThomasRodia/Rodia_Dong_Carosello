@@ -5,7 +5,20 @@ const fs = require('fs');
 const multer  = require('multer');
 const bodyParser = require('body-parser');
 const path = require('path');
-const mysql = require('mysql2');
+
+const conf = JSON.parse(fs.readFileSync('config.json'));
+
+// Configurazione DB
+conf.database.ssl.ca = fs.readFileSync(__dirname + '/ca.pem');
+
+const DBManager = require('./DBManager');
+db = DBManager(conf.database);
+
+db.createTable();
+
+// Configurazione storage
+
+const storepath = conf.storage;
 
 const data = fs.readFileSync('config.json');
 const config = JSON.parse(data);
@@ -27,46 +40,34 @@ var storage = multer.diskStorage({
 const upload = multer({ storage: storage}).single('file');
 app.use("/files", express.static(path.join(__dirname, "files")));
 app.post('/img/upload', (req, res) => {
-   upload(req, res, (err) => {   
+   upload(req, res, async (err) => {   
       if (!req.file) {
          return res.status(400).json({ error: "Nessun file caricato" });
       }
-      res.json({url: "./files/" + req.file.filename});    
+      await db.insert(storepath + req.file.filename);
+      res.json({url: storepath + req.file.filename});    
    })
 });
 
-app.get('/img/downloadAll', (req, res) => {
-   const directoryPath = path.join(__dirname, "files");
-   
-   fs.readdir(directoryPath, (err, files) => {
-      if (err) {
-         return res.status(500).json({ error: "Errore nella lettura della directory." });
-      }
-      
-      const images = files.map(file => ({ nome: file }));
-      res.json(images);
-   });
+app.get('/img/downloadAll', async (req, res) => {
+   const queryResult = await db.selectAll();
+
+   res.json(queryResult);
 });
-app.delete('/img/delete/:index', (req, res) => {
-   const directoryPath = path.join(__dirname, "files");
-   
-   fs.readdir(directoryPath, (err, files) => {
-       if (err) {
-           return res.status(500).json({ error: "Errore nella lettura della directory." });
-       }
-       
-       const index = parseInt(req.params.index, 10);
-       if (isNaN(index) || index < 0 || index >= files.length) {
-           return res.status(400).json({ error: "Indice non valido." });
-       }
-       
-       const fileToDelete = path.join(directoryPath, files[index]);
-       fs.unlink(fileToDelete, (err) => {
-           if (err) {
-               return res.status(500).json({ error: "Errore nell'eliminazione del file." });
-           }
-           res.json({ message: "File eliminato con successo." });
-       });
+app.delete('/img/delete/:index', async (req, res) => {
+
+   const data = await db.selectAll();
+   const found = data.find(image => image.id === parseInt(req.params.index, 10));
+   const fileToDelete = found.url;
+
+   fs.unlink(fileToDelete, async (err) => {
+      if (err) {
+          console.error(err);
+      }
+
+      await db.delete(req.params.index);
+
+      res.json({response: "immagine eliminata!"});
    });
 });
 

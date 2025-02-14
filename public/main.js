@@ -2,23 +2,17 @@ import { createTable } from "./scripts/components/tabella.js";
 import { createTableCarosello } from "./scripts/components/carosello.js"
 import { createNavigator } from "./scripts/components/navigator.js";
 import { createModalForm } from "./scripts/components/modalForm.js";
+import { createMiddleware } from "./scripts/components/middleware.js";
 const navigator = createNavigator(document.querySelector("#container"));
 
-let cb = function(){
-
-}
-let cbc = function(){
-
-}
 const tabella = document.getElementById("Tabella");
 let componenteTabella = createTable(tabella);
-componenteTabella.load();
-componenteTabella.setcallback(cb);
+componenteTabella.setMiddleware(createMiddleware());
+componenteTabella.render();
 
 const carosello = document.getElementById("Carosello");
 let componenteCarosello = createTableCarosello(carosello);
 componenteCarosello.load();
-componenteCarosello.setcallback(cbc);
 
 // form modale login
 const login = createModalForm(document.getElementById("modal-bd"));
