@@ -18,8 +18,13 @@ export const createNavigator = (parentElement) => {
       const pageName = url.hash.replace("#", "");
       const selected = pages.filter((page) => page.id === pageName)[0] || pages[0];
 
-      hide(pages);
-      show(selected);
+      if (selected !== document.getElementById("pagina2")) {
+         hide(pages);
+         show(selected);
+      } else if (Cookies.get("isLogged")) {
+         hide(pages);
+         show(selected);
+      }
    }
    window.addEventListener('popstate', render);
    render();

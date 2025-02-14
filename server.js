@@ -3,10 +3,13 @@ const http = require("http");
 const app = express();
 const fs = require('fs');
 const multer  = require('multer');
-//const server = http.createServer(app);
 const bodyParser = require('body-parser');
 const path = require('path');
-//const mysql = require('mysql2');
+const mysql = require('mysql2');
+
+const data = fs.readFileSync('config.json');
+const config = JSON.parse(data);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -40,6 +43,30 @@ app.get('/img/downloadAll', (req, res) => {
       const images = files.map(file => ({ nome: file }));
       res.json(images);
    });
+});
+
+
+// Autenticazione
+app.post('/api/login', async (req, res) => {
+   
+   const responselog = await fetch(config.credentials.login, {
+      method: "POST",
+      headers: {
+          "content-type": "application/json",
+          "key": config.credentials.token
+      },
+      body: JSON.stringify({
+          username: req.body.username,
+          password: req.body.password
+      }),
+   });
+
+   const data = await responselog.json();
+
+   res.json({
+      validity: data.result,
+   });
+
 });
 
 const server = http.createServer(app);
