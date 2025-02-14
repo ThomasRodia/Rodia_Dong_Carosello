@@ -13,7 +13,7 @@ export const createTable = (parentElement) => {
                 <div class="container">
                     <div class="row">
                         <div class="col">
-                            <input id="file" name="file" class="form-control" placeholder="Inserisci CSV" type="file" single>
+                            <input id="file" name="file" class="form-control" placeholder="Inserisci immagine" type="file" single>
                         </div>
                         <div class="col">
                             <button type="button" id="Caricaimg" class="btn btn-dark b1">
@@ -37,11 +37,11 @@ export const createTable = (parentElement) => {
             for (let i = 0; i < dati.length; i++) {
                 html += `
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            ${dati[i].nome}
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">`
+                            +dati[i].nome+`
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            <img src="files/${dati[i].nome}" class="immagine-tabella" alt="immagine" />
+                            <img src="files/`+dati[i].nome+`" class="immagine-tabella" alt="immagine" />
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             <a href="./index.html">
@@ -81,6 +81,7 @@ export const createTable = (parentElement) => {
                     console.info(fetchOptions);
                     const res = await fetch("/img/upload", fetchOptions);
                     inputFile.value = "";
+                    
                 } catch (e) {
                     console.log(e);
                 }
@@ -96,6 +97,19 @@ export const createTable = (parentElement) => {
         },
 
         delete: function (indice) {
+            fetch(`/img/delete/${indice}`, {
+                method: 'DELETE',
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Errore nella cancellazione del file");
+                }
+                dati.splice(indice, 1);
+                istance.render();
+            })
+            .catch(error => {
+                console.error("Errore durante l'eliminazione dell'immagine:", error);
+            });
         },
 
         load: function () {
