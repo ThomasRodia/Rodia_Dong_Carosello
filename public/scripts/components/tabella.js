@@ -1,8 +1,7 @@
-export const createTable = (parentElement) => {
+export const createTable = (parentElement, pubsub) => {
     let dati = null;
     let istance;
     let mw;
-    let conf;
 
     istance = {
         setMiddleware: (middleware) => {
@@ -69,6 +68,7 @@ export const createTable = (parentElement) => {
                 await mw.upload(inputFile);
                 dati = await mw.load();
                 istance.render();
+                pubsub.publish("imageUpdated");
             };
 
             input.onclick = handleSubmit;
@@ -78,10 +78,12 @@ export const createTable = (parentElement) => {
                     await mw.delete(button.id.split("_")[1]);
                     dati = await mw.load();
                     istance.render();
+                    pubsub.publish("imageUpdated");
                 };
             });
         },
     };
+
 
     return istance;
 };
