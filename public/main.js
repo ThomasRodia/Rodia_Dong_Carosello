@@ -12,7 +12,9 @@ componenteTabella.render();
 
 const carosello = document.getElementById("Carosello");
 let componenteCarosello = createTableCarosello(carosello);
-componenteCarosello.load();
+componenteCarosello.setMiddleware(createMiddleware());
+componenteCarosello.render();
+//componenteCarosello.load();
 
 // form modale login
 const login = createModalForm(document.getElementById("modal-bd"));

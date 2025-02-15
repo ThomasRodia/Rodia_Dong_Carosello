@@ -1,14 +1,17 @@
 export const createTableCarosello = (parentElement) => {
   let dati = null;
   let istance;
-  let callback;
 
+let mw;
   istance = {
-      setcallback: (cb) => {
-          callback = cb;
-      },
+    
+      setMiddleware: (middleware) => {
+        mw = middleware;
+    },
 
-      render: () => {
+      render:async () => {
+        dati = await mw.load();
+        console.info(dati);
           let html = `
               <div id="carouselExample" class="carousel slide">
                   <div class="carousel-inner">
@@ -17,7 +20,7 @@ export const createTableCarosello = (parentElement) => {
           for (let i = 0; i < dati.length; i++) {
               html += `
                   <div class="carousel-item active">
-                      <img src="../files/${dati[i].nome}" class="d-block w-100 immagine-carosello" alt="immagine">
+                      <img src=".`+dati[i].url+`" class="d-block w-100 immagine-carosello" alt="immagine">
                   </div>
               `;
           }
